@@ -9,8 +9,10 @@
                     <button type="button" @click="createCar">Create</button>
                 </form>
             </div>
-            <div class="col-12">
-
+            <div class="col-4 outlines" v-for="(car, index) in cars">
+                <p>{{car.make}}</p>
+                <p>{{car.model}}</p>
+                <button @click="deleteCar(index)">Delete</button>
             </div>
         </div>
     </div>
@@ -22,7 +24,7 @@
         name: 'cars',
         data() {
             return {
-                cars: [],
+                cars: [{ title: "something" }],
                 car: {}
             }
         },
@@ -31,6 +33,9 @@
             createCar() {
                 this.cars.push(this.car)
                 this.car = {}
+            },
+            deleteCar(index) {
+                this.cars.splice(index, 1)
             }
         },
         components: {}
@@ -39,4 +44,7 @@
 
 
 <style scoped>
+    .outlines {
+        outline: black solid 1px
+    }
 </style>

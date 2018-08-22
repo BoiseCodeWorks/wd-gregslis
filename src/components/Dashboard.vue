@@ -5,8 +5,8 @@
         <h1>Dashboard</h1>
         <button class="btn btn-dark" @click="toggleCars">Cars</button>
         <button class="btn btn-dark" @click="toggleHouses">Houses</button>
-        <Cars v-if="showCars"></Cars>
-        <Houses v-if="showHouses"></Houses>
+        <Cars v-show="showCars"></Cars>
+        <Houses v-show="showHouses"></Houses>
       </div>
     </div>
   </div>
