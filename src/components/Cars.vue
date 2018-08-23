@@ -24,18 +24,25 @@
         name: 'cars',
         data() {
             return {
-                cars: [{ title: "something" }],
                 car: {}
             }
         },
-        computed: {},
+        computed: {
+            cars() {
+                return this.$store.state.cars
+            }
+        },
         methods: {
             createCar() {
-                this.cars.push(this.car)
-                this.car = {}
+                if (this.car.make && this.car.model) {
+                    this.$store.dispatch("addCar", this.car)
+                    this.car = {}
+                } else {
+                    alert("You didnt fill it out!!!!!")
+                }
             },
             deleteCar(index) {
-                this.cars.splice(index, 1)
+                this.$store.dispatch("removeCar", index)
             }
         },
         components: {}
