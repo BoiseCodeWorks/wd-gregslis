@@ -1,26 +1,58 @@
 import vue from 'vue'
 import vuex from 'vuex'
+import axios from 'axios'
+
+let api = axios.create({
+    baseURL: 'https://bcw-gregslist.herokuapp.com/api/',
+    timeout: 3000
+})
+
 
 vue.use(vuex)
 
 let store = new vuex.Store({
     state: {
-        cars: []
+        cars: [],
+        houses: []
     },
     mutations: {
-        setCar(state, newCar) {
-            state.cars.push(newCar)
+        setCars(state, cars) {
+            state.cars = cars
         },
-        removeCar(state, index) {
-            state.cars.splice(index, 1)
+        setHouses(state, houses) {
+            state.houses = houses
         }
     },
     actions: {
-        addCar({ commit, dispatch }, newCar) {
-            commit("setCar", newCar)
+        getAllCars({ commit, dispatch }) {
+            api.get('cars')
+                .then(res => {
+                    commit('setCars', res.data.data)
+                })
         },
-        removeCar({ dispatch, commit }, index) {
-            commit("removeCar", index)
+        addCar({ commit, dispatch }, newCar) {
+            api.post('cars', newCar)
+                .then(res => {
+                    dispatch('getAllCars')
+                })
+        },
+        editCar({ commit, dispatch }, car) {
+            api.put('cars/' + car._id, car)
+                .then(res => {
+                    dispatch('getAllCars')
+                })
+        },
+        removeCar({ dispatch, commit }, id) {
+            api.delete('cars/' + id)
+                .then(res => {
+                    dispatch('getAllCars')
+                })
+        },
+        getAllHouses({ commit, dispatch }) {
+            api.get('houses')
+                .then(res => {
+                    commit('setHouses', res.data.data)
+                })
         }
     }
 })

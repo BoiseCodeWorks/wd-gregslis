@@ -17,6 +17,10 @@
   import Houses from './Houses'
   export default {
     name: 'dashboard',
+    mounted() {
+      this.$store.dispatch('getAllCars')
+      this.$store.dispatch('getAllHouses')
+    },
     data() {
       return {
         showCars: false,
@@ -33,8 +37,12 @@
         this.showHouses = true
       }
     },
-    components: { Cars, Houses }
+    components: {
+      Cars,
+      Houses
+    }
   }
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -57,4 +65,5 @@
   a {
     color: #42b983;
   }
+
 </style>
