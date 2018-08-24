@@ -3,7 +3,8 @@
     <div class="row">
       <div class="col-12">
         <h1>Dashboard</h1>
-        <button class="btn btn-dark" @click="toggleCars">Cars</button>
+        <!-- <button class="btn btn-dark" @click="toggleCars">Cars</button> -->
+        <router-link :to="{name: 'Cars'}">CARS</router-link>
         <button class="btn btn-dark" @click="toggleHouses">Houses</button>
         <Cars v-show="showCars"></Cars>
         <Houses v-show="showHouses"></Houses>
@@ -18,7 +19,6 @@
   export default {
     name: 'dashboard',
     mounted() {
-      this.$store.dispatch('getAllCars')
       this.$store.dispatch('getAllHouses')
     },
     data() {

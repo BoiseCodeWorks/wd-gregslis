@@ -7,8 +7,12 @@
 
 <script>
   export default {
-    name: 'App'
+    name: 'App',
+    mounted() {
+      this.$store.dispatch('getAllCars')
+    }
   }
+
 </script>
 
 <style>
@@ -20,4 +24,5 @@
     color: #2c3e50;
     margin-top: 60px;
   }
+
 </style>

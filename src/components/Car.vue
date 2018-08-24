@@ -2,23 +2,12 @@
   <div class="cars">
     <router-link :to="{name: 'Dashboard'}">HOME</router-link>
     <div class="row">
-      <div class="col-12">
-        <h3>Cars</h3>
-        <form>
-          <input type="text" name="make" v-model="car.make" placeholder="make">
-          <input type="text" name="model" v-model="car.model" placeholder="model">
-          <input type="url" name="img" v-model="car.imgUrl" placeholder="IMG">
-          <input type="number" name="year" v-model="car.year" placeholder="year">
-          <input type="number" name="price" v-model="car.price" placeholder="price">
-          <button type="button" @click="createCar">Create</button>
-        </form>
-      </div>
-      <div class="col-4 outlines" v-for="(car, index) in cars">
+      <div v-if="car._id" class="col-4 outlines">
         <img :src="car.imgUrl" alt="">
         <p>{{car.make}}</p>
         <p>{{car.model}}</p>
         <p>{{car.price}}</p>
-        <router-link :to="{name: 'Car', params: {id: car._id}}">View Details</router-link>
+        <button @click="bid(car)">BID</button>
         <button @click="deleteCar(car._id)">Delete</button>
       </div>
     </div>
@@ -29,14 +18,13 @@
 <script>
   export default {
     name: 'cars',
+    props: ['id'],
     data() {
-      return {
-        car: {}
-      }
+      return {}
     },
     computed: {
-      cars() {
-        return this.$store.state.cars
+      car() {
+        return this.$store.state.cars.find(car => car._id == this.id)
       }
     },
     methods: {
