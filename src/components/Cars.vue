@@ -19,7 +19,7 @@
         <p>{{car.model}}</p>
         <p>{{car.price}}</p>
         <router-link :to="{name: 'Car', params: {id: car._id}}">View Details</router-link>
-        <button @click="deleteCar(car._id)">Delete</button>
+        <button class="btn btn-large btn-success" @click="deleteCar(car._id)">Delete</button>
       </div>
     </div>
   </div>
@@ -27,48 +27,48 @@
 
 
 <script>
-  export default {
-    name: 'cars',
-    data() {
-      return {
-        car: {}
-      }
-    },
-    computed: {
-      cars() {
-        return this.$store.state.cars
-      }
-    },
-    methods: {
-      createCar() {
-        if (this.car.make && this.car.model) {
-          this.$store.dispatch("addCar", this.car)
-          this.car = {}
-        } else {
-          alert("You didnt fill it out!!!!!")
-        }
-      },
-      bid(car) {
-        car.price += 100
-        this.$store.dispatch('editCar', car)
-      },
-      deleteCar(id) {
-        this.$store.dispatch("removeCar", id)
-      }
-    },
-    components: {}
-  }
+import router from "../router";
 
+export default {
+  name: "cars",
+  data() {
+    return {
+      car: {}
+    };
+  },
+  computed: {
+    cars() {
+      return this.$store.state.cars;
+    }
+  },
+  methods: {
+    createCar() {
+      if (this.car.make && this.car.model) {
+        this.$store.dispatch("addCar", this.car);
+        this.car = {};
+      } else {
+        alert("You didnt fill it out!!!!!");
+      }
+    },
+    bid(car) {
+      car.price += 100;
+      this.$store.dispatch("editCar", car);
+    },
+    deleteCar(id) {
+      this.$store.dispatch("removeCar", id);
+    }
+  },
+  components: {}
+};
 </script>
 
 
 <style scoped>
-  .outlines {
-    outline: black solid 1px
-  }
+.outlines {
+  outline: black solid 1px;
+}
 
-  .outlines img {
-    width: 100%
-  }
-
+.outlines img {
+  width: 100%;
+}
 </style>
