@@ -1,6 +1,8 @@
 import vue from 'vue'
 import vuex from 'vuex'
 import axios from 'axios'
+import firebase from 'firebase/app'
+import db from '../utils/firebaseInit'
 
 let api = axios.create({
     baseURL: 'https://bcw-gregslist.herokuapp.com/api/',
@@ -61,31 +63,26 @@ let store = new vuex.Store({
                 })
         },
         getAllHouses({ commit, dispatch }) {
-            api.get('houses')
-                .then(res => {
-                    commit('setHouses', res.data.data)
+            db.collection('houses').get().then(querySnapShot => {
+                let houses = []
+                querySnapShot.forEach(doc => {
+                    let house = doc.data()
+                    house.id = doc.id
+                    houses.push(house)
                 })
-                .catch(err => {
-                    console.error(err.response.data.message)
-                })
+                commit("setHouses", houses)
+            })
         },
         addHouse({ commit, dispatch }, house) {
-            api.post('houses', house)
-                .then(res => {
-                    dispatch("getAllHouses")
-                })
-                .catch(err => {
-                    console.error(err.response.data.message)
-                })
+            db.collection('houses').add(house).then(doc => {
+                console.log("Document written with ID: ", doc.id)
+                dispatch("getAllHouses")
+            })
         },
         deleteHouse({ dispatch, commit }, id) {
-            api.delete('houses/' + id)
-                .then(res => {
-                    dispatch('getAllHouses')
-                })
-                .catch(err => {
-                    console.error(err.response.data.message)
-                })
+            db.collection('houses').doc(id).delete().then(() => {
+                dispatch('getAllHouses')
+            })
         },
         editHouse({ commit, dispatch }, house) {
             api.put('houses/' + house._id, house)

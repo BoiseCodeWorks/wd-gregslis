@@ -22,7 +22,7 @@
                 <p>Bedrooms: {{house.bedrooms}}</p>
                 <p>Year: {{house.year}}</p>
                 <p>Price: {{house.price}}</p>
-                <button class="btn btn-danger btn-sm" type="button" @click="deleteHouse(house._id)">Delete</button>
+                <button class="btn btn-danger btn-sm" type="button" @click="deleteHouse(house.id)">Delete</button>
                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal" @click="editHouse = house">
                     Edit
                 </button>
@@ -62,40 +62,40 @@
 
 
 <script>
-    export default {
-        name: "houses",
-        data() {
-            return {
-                house: {},
-                editHouse: {}
-            };
-        },
-        mounted() {
-            this.$store.dispatch("getAllHouses")
-        },
-        computed: {
-            houses() {
-                return this.$store.state.houses
-            }
-        },
-        methods: {
-            createHouse() {
-                this.$store.dispatch("addHouse", this.house)
-            },
-            deleteHouse(id) {
-                this.$store.dispatch("deleteHouse", id)
-            },
-            updateHouse() {
-                this.$store.dispatch("editHouse", this.editHouse)
-            }
-        },
-        components: {}
+export default {
+  name: "houses",
+  data() {
+    return {
+      house: {},
+      editHouse: {}
     };
+  },
+  mounted() {
+    this.$store.dispatch("getAllHouses");
+  },
+  computed: {
+    houses() {
+      return this.$store.state.houses;
+    }
+  },
+  methods: {
+    createHouse() {
+      this.$store.dispatch("addHouse", this.house);
+    },
+    deleteHouse(id) {
+      this.$store.dispatch("deleteHouse", id);
+    },
+    updateHouse() {
+      this.$store.dispatch("editHouse", this.editHouse);
+    }
+  },
+  components: {}
+};
 </script>
 
 
 <style scoped>
-    .outline {
-        outline: black solid 1px;
-    }
+.outline {
+  outline: black solid 1px;
+}
 </style>
